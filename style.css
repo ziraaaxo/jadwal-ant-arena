@@ -1,0 +1,724 @@
+:root {
+  --primary-gradient-start: #4318ff;
+  --primary-gradient-end: #7551ff;
+  --bg-light: #f4f7fe;
+  --card-bg: #ffffff;
+  --text-primary: #1b2559;
+  --text-secondary: #a3aed0;
+  --border-color: #e9edf7;
+  --success-color: #05cd99;
+  --brand-start: var(--primary-gradient-start);
+  --brand-end: var(--primary-gradient-end);
+  --muted: #a3aed0;
+  /* Sidebar and stat colors used in migrated CSS */
+  --sidebar-bg: #1a1f37;
+  --sidebar-hover: #252a42;
+  --stat-earnings: #4318ff;
+  --stat-spend: #6ad2ff;
+  --stat-sales: #05cd99;
+  --stat-balance: #ffb547;
+}
+
+body {
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  background-color: var(--bg-light);
+  color: var(--text-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-gradient-start);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-light);
+}
+
+.site-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modern Card Styling */
+.jadwal {
+  background-color: var(--card-bg);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+  animation: fadeIn 0.4s ease;
+}
+
+.jadwal h2 {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+/* Table Styling - Modern Clean Look */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: none;
+}
+
+.table thead th {
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 16px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table tbody td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 500;
+  background: white;
+}
+
+.table tbody tr:hover {
+  background: rgba(67, 24, 255, 0.02);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(244, 247, 254, 0.5);
+}
+
+/* Toast container */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1100;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(67, 24, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 24, 255, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .table thead {
+    display: none;
+  }
+
+  .table tbody td {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 16px;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: inline-block;
+    width: 100px;
+  }
+
+  .jadwal {
+    padding: 20px;
+  }
+
+  .jadwal h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* (animation moved into the main .jadwal block above) */
+
+/* ===== CSS migrated from PHP inline styles ===== */
+/* admin-dashboard.php styles (migrated) */
+/* Sidebar, cards, stat-cards, charts, table tweaks, forms, modals, helpers */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background: var(--sidebar-bg);
+  padding: 30px 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar .sidebar-brand {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 0 30px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar .sidebar-brand i {
+  font-size: 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sidebar .nav-link {
+  color: var(--text-secondary);
+  padding: 14px 30px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  margin: 4px 0;
+  font-weight: 500;
+  font-size: 0.95rem;
+  position: relative;
+}
+.sidebar .nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sidebar .nav-link:hover {
+  background-color: var(--sidebar-hover);
+  color: white;
+}
+.sidebar .nav-link.active {
+  background-color: var(--sidebar-hover);
+  color: white;
+}
+.sidebar .nav-link.active::before {
+  opacity: 1;
+}
+.sidebar .nav-link i {
+  margin-right: 14px;
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+.sidebar hr {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 20px 30px;
+}
+
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  background: var(--bg-light);
+}
+
+.top-navbar {
+  background: transparent;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top-navbar #pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.top-navbar .text-muted {
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+}
+
+.card {
+  border: none;
+  box-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: var(--card-bg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 24px 50px rgba(112, 144, 176, 0.18);
+}
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 20px 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.card-body {
+  padding: 24px;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--card-color) 0%,
+    var(--card-color-light) 100%
+  );
+}
+.stat-card.primary {
+  --card-color: #4318ff;
+  --card-color-light: #7551ff;
+}
+.stat-card.success {
+  --card-color: #05cd99;
+  --card-color-light: #01b574;
+}
+.stat-card.warning {
+  --card-color: #ffb547;
+  --card-color-light: #ffa626;
+}
+.stat-card.info {
+  --card-color: #6ad2ff;
+  --card-color-light: #2bb0ed;
+}
+.stat-card .card-body {
+  padding: 24px;
+}
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.stat-card.primary .stat-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(67, 24, 255, 0.1),
+    rgba(117, 81, 255, 0.1)
+  );
+  color: var(--stat-earnings);
+}
+.stat-card.success .stat-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(5, 205, 153, 0.1),
+    rgba(1, 181, 116, 0.1)
+  );
+  color: var(--stat-sales);
+}
+.stat-card.warning .stat-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 181, 71, 0.1),
+    rgba(255, 166, 38, 0.1)
+  );
+  color: var(--stat-balance);
+}
+.stat-card.info .stat-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(106, 210, 255, 0.1),
+    rgba(43, 176, 237, 0.1)
+  );
+  color: var(--stat-spend);
+}
+
+/* Stat values & change indicators (ensure visible) */
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  display: block;
+  margin-top: 4px;
+}
+
+.stat-change {
+  font-size: 0.875rem;
+  color: var(--stat-sales);
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.stat-change.negative {
+  color: #ee5d50;
+}
+
+.section-content {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.section-content.active {
+  display: block;
+}
+
+.team-cell {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  position: relative;
+}
+.team-cell:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(67, 24, 255, 0.08),
+    rgba(117, 81, 255, 0.08)
+  ) !important;
+  transform: scale(1.02);
+}
+.team-cell:hover::after {
+  content: "✏️";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background: var(--text-secondary);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+}
+.btn-danger {
+  background: linear-gradient(135deg, #ee5d50, #e53e30);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+}
+
+.alert {
+  border: none;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-weight: 500;
+}
+.alert-success {
+  background: rgba(5, 205, 153, 0.1);
+  color: var(--stat-sales);
+  border-left: 4px solid var(--stat-sales);
+}
+.alert-danger {
+  background: rgba(238, 93, 80, 0.1);
+  color: #ee5d50;
+  border-left: 4px solid #ee5d50;
+}
+
+.modal-content {
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+.modal-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 24px;
+}
+.modal-body {
+  padding: 24px;
+}
+.modal-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 24px;
+}
+
+.form-control,
+.form-select {
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-gradient-start);
+  box-shadow: 0 0 0 3px rgba(67, 24, 255, 0.1);
+}
+.form-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -280px;
+  }
+  .sidebar.show {
+    left: 0;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  .top-navbar {
+    padding: 16px 20px;
+  }
+  .top-navbar #pageTitle {
+    font-size: 1.5rem;
+  }
+  .stat-value {
+    font-size: 1.75rem;
+  }
+  .container-fluid {
+    padding: 20px !important;
+  }
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  padding: 0;
+}
+@media (max-width: 768px) {
+  .mobile-toggle {
+    display: block;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+.loading-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-size: 1000px 100%;
+}
+
+/* admin-login.php styles (migrated) */
+.login-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+}
+.login-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
+  padding: 50px 40px;
+  backdrop-filter: blur(10px);
+}
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logo {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 30px rgba(67, 24, 255, 0.3);
+}
+.logo i {
+  font-size: 40px;
+  color: white;
+}
+.login-header h2 {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.login-header p {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.input-group-text {
+  background: transparent;
+  border: 2px solid #e9edf7;
+  border-right: none;
+  color: var(--text-secondary);
+  border-radius: 12px 0 0 12px;
+}
+.input-group .form-control {
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+}
+.input-group:focus-within .input-group-text {
+  border-color: var(--primary-gradient-start);
+}
+
+/* admin-form.php small rules migrated */
+.navbar-custom {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.admin-form-card {
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Pagination Styling */
+.pagination {
+  gap: 8px;
+}
+.pagination .page-link {
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 8px 14px;
+  box-shadow: 0 2px 6px rgba(112, 144, 176, 0.08);
+  transition: all 0.2s ease;
+}
+.pagination .page-link:hover {
+  background-color: var(--bg-light);
+  color: var(--primary-gradient-start);
+  box-shadow: 0 4px 12px rgba(67, 24, 255, 0.15);
+  transform: translateY(-1px);
+}
+.pagination .page-item.active .page-link {
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
+  color: white;
+  box-shadow: 0 4px 12px rgba(67, 24, 255, 0.3);
+  font-weight: 600;
+}
+.pagination .page-item.disabled .page-link {
+  background-color: var(--bg-light);
+  color: var(--text-secondary);
+  opacity: 0.6;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Sortable Table Headers */
+.table thead th a {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.table thead th a:hover {
+  color: var(--primary-gradient-start) !important;
+}
+.table thead th a i {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+.table thead th a:hover i {
+  opacity: 1;
+}
+
+/* End migrated CSS */
