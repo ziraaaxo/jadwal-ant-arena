@@ -64,8 +64,9 @@ $result = $conn->query($sql);
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Pages / Dashboard
-                    </div>
+                    <div id="pageBreadcrumb"
+                        style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Pages / <span
+                            id="pageSectionName">Dashboard</span></div>
                     <h1 id="pageTitle" class="m-0"
                         style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Dashboard</h1>
                 </div>
@@ -391,9 +392,11 @@ $result = $conn->query($sql);
                 sections.forEach(s => s.classList.remove('active'));
                 document.getElementById('section-' + targetSection).classList.add('active');
 
-                // Update page title
-                document.getElementById('pageTitle').textContent = this.querySelector('span')
-                    .textContent;
+                // Update page title and breadcrumb section name
+                const sectionName = this.querySelector('span').textContent;
+                document.getElementById('pageTitle').textContent = sectionName;
+                const sectionNameElem = document.getElementById('pageSectionName');
+                if (sectionNameElem) sectionNameElem.textContent = sectionName;
 
                 // Load stats if statistik section
                 if (targetSection === 'statistik') {
@@ -422,6 +425,15 @@ $result = $conn->query($sql);
         } else {
             // Default behavior: load statistics (sidebar default is Statistik)
             loadStatistics();
+        }
+
+        // Ensure breadcrumb/page title reflects the active sidebar link on initial load
+        const activeLinkOnLoad = document.querySelector('.sidebar .nav-link.active[data-section]');
+        if (activeLinkOnLoad) {
+            const name = activeLinkOnLoad.querySelector('span').textContent;
+            document.getElementById('pageTitle').textContent = name;
+            const sectionNameElem = document.getElementById('pageSectionName');
+            if (sectionNameElem) sectionNameElem.textContent = name;
         }
 
         // Statistics & Charts

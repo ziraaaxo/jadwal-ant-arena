@@ -182,6 +182,35 @@ function getNextSortOrder($column) {
         </nav>
     </div>
 
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-labelledby="modalConfirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <h5 class="modal-title" id="modalConfirmDeleteLabel" style="font-weight: 700; color: var(--text-primary);">
+                        <i class="bi bi-trash3 text-danger me-2"></i>Konfirmasi Hapus
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="color: var(--text-secondary);">
+                    Apakah Anda yakin ingin menghapus transaksi ini? Tindakan ini tidak dapat dibatalkan.
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>Batal
+                    </button>
+                    <form id="formDeleteTransaksi" action="admin-transaksi-actions.php" method="POST" class="d-inline">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="id" id="delete_id" value="">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Top Navbar -->
@@ -341,8 +370,8 @@ function getNextSortOrder($column) {
                                         echo "<td><span class='badge {$badgeClass}'>" . ucfirst($row['kategori']) . "</span></td>";
                                         echo "<td><strong>" . $nominalFormatted . "</strong></td>";
                                         echo "<td>";
-                                        echo "<button class='btn btn-sm btn-warning me-1' onclick='editTransaksi(" . json_encode($row) . ")'><i class='bi bi-pencil'></i></button>";
-                                        echo "<button class='btn btn-sm btn-danger' onclick='hapusTransaksi(" . $row['id'] . ")'><i class='bi bi-trash'></i></button>";
+                                        echo "<button class='btn btn-sm btn-warning me-1 action-btn' onclick='editTransaksi(" . json_encode($row) . ")'><i class='bi bi-pencil'></i></button>";
+                                        echo "<button class='btn btn-sm btn-danger action-btn' onclick='hapusTransaksi(" . $row['id'] . ")'><i class='bi bi-trash'></i></button>";
                                         echo "</td>";
                                         echo "</tr>";
                                     }
@@ -519,28 +548,15 @@ function getNextSortOrder($column) {
         modal.show();
     }
 
-    // Hapus transaksi
+    // Hapus transaksi via modal konfirmasi
     function hapusTransaksi(id) {
-        if (confirm('Yakin ingin menghapus transaksi ini?')) {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'admin-transaksi-actions.php';
+        // Set ID ke input hidden pada form di modal
+        const inputId = document.getElementById('delete_id');
+        if (inputId) inputId.value = id;
 
-            const actionInput = document.createElement('input');
-            actionInput.type = 'hidden';
-            actionInput.name = 'action';
-            actionInput.value = 'delete';
-
-            const idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'id';
-            idInput.value = id;
-
-            form.appendChild(actionInput);
-            form.appendChild(idInput);
-            document.body.appendChild(form);
-            form.submit();
-        }
+        const modalEl = document.getElementById('modalConfirmDelete');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
     }
 
     // Set default date to today

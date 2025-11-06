@@ -22,7 +22,7 @@ $result = $conn->query($sql);
     <link rel="icon" href="favicon.ico" />
 </head>
 
-<body>
+<body class="site-index">
     <div class="container site-container">
         <section id="jadwal" class="jadwal">
             <div class="d-flex justify-content-between align-items-center mb-4">

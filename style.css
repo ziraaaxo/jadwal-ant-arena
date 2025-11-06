@@ -792,4 +792,54 @@ body {
   opacity: 1;
 }
 
+/* Action buttons in transaksi table: make edit and delete same size */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  min-width: 40px;
+  height: 34px;
+  border-radius: 8px;
+}
+.action-btn i {
+  font-size: 1rem;
+}
+
 /* End migrated CSS */
+
+/* Background for public index page: use small tile, repeat horizontally and centered for symmetry */
+body.site-index {
+  /* Use the generated SVG pattern which references bg.png and leaves 100px gaps */
+  background-image: url("bg.svg");
+  background-repeat: repeat; /* repeat both horizontally and vertically */
+  background-position: center center; /* center the repeating pattern for symmetry */
+  background-size: auto; /* let the SVG pattern handle spacing */
+  background-attachment: scroll;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* overlay to keep content readable over busy background */
+body.site-index::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.82) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-container {
+  position: relative;
+  z-index: 1; /* place above the overlay */
+}
+
+/* Give the index page a 100px padding on all sides so the tiled pattern doesn't touch edges */
+body.site-index .site-container {
+  padding: 100px;
+}
