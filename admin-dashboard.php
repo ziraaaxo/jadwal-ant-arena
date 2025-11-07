@@ -33,15 +33,15 @@ $result = $conn->query($sql);
         <nav class="nav flex-column">
             <a class="nav-link active" href="#" data-section="statistik">
                 <i class="bi bi-house-door"></i>
-                <span>Dashboard</span>
+                <span>Beranda</span>
             </a>
             <a class="nav-link" href="#" data-section="edit-jadwal">
                 <i class="bi bi-calendar-week"></i>
-                <span>Edit Jadwal</span>
+                <span>Penjadwalan</span>
             </a>
             <a class="nav-link" href="admin-transaksi.php">
                 <i class="bi bi-cash-coin"></i>
-                <span>Transaksi Keuangan</span>
+                <span>Transaksi</span>
             </a>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
@@ -50,7 +50,7 @@ $result = $conn->query($sql);
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>Keluar</span>
             </a>
         </nav>
     </div>
@@ -65,10 +65,10 @@ $result = $conn->query($sql);
                 </button>
                 <div>
                     <div id="pageBreadcrumb"
-                        style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Pages / <span
-                            id="pageSectionName">Dashboard</span></div>
+                        style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / <span
+                            id="pageSectionName">Beranda</span></div>
                     <h1 id="pageTitle" class="m-0"
-                        style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Dashboard</h1>
+                        style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Beranda</h1>
                 </div>
             </div>
             <div class="d-flex align-items-center gap-3">
@@ -100,7 +100,7 @@ $result = $conn->query($sql);
 
             <!-- Section: Statistik -->
             <div class="section-content active" id="section-statistik">
-                <h4 class="mb-4" style="color: var(--text-primary); font-weight: 700;">📊 Dashboard Overview</h4>
+                <h4 class="mb-4" style="color: var(--text-primary); font-weight: 700;">📊 Statistik</h4>
 
                 <!-- Stats Cards -->
                 <div class="row">
@@ -232,7 +232,7 @@ $result = $conn->query($sql);
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h5 class="mb-1" style="color: var(--text-primary);">Weekly Revenue</h5>
+                                        <h5 class="mb-1" style="color: var(--text-primary);">Slot Minggu Ini</h5>
                                         <p class="mb-0" style="color: var(--text-secondary); font-size: 0.875rem;">
                                             Jumlah Slot Terisi per Hari</p>
                                     </div>
@@ -252,7 +252,7 @@ $result = $conn->query($sql);
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h5 class="mb-1" style="color: var(--text-primary);">Weekly Team</h5>
+                                        <h5 class="mb-1" style="color: var(--text-primary);">Tim Minggu Ini</h5>
                                         <p class="mb-0" style="color: var(--text-secondary); font-size: 0.875rem;">Tim
                                             Terbanyak</p>
                                     </div>
@@ -272,8 +272,27 @@ $result = $conn->query($sql);
 
             <!-- Section: Edit Jadwal -->
             <div class="section-content" id="section-edit-jadwal">
-                <h4 class="mb-4" style="color: var(--text-primary); font-weight: 700;">📅 Jadwal Management</h4>
+                <h4 class="mb-4" style="color: var(--text-primary); font-weight: 700;">📅 Manajemen Jadwal</h4>
 
+                <div class="mb-3 d-flex gap-2 justify-content-end">
+                    <button class="btn btn-success" id="setSlotsAvailable">
+                        <i class="bi bi-check-circle"></i> Sediakan Semua Slot
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="setDayAvailableButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-check-circle"></i> Sediakan Per Hari
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="setDayAvailableButton">
+                            <li><button class="dropdown-item set-day-available" data-day="senin">Senin</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="selasa">Selasa</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="rabu">Rabu</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="kamis">Kamis</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="jumat">Jumat</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="sabtu">Sabtu</button></li>
+                            <li><button class="dropdown-item set-day-available" data-day="minggu">Minggu</button></li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -289,7 +308,6 @@ $result = $conn->query($sql);
                                         <th>Jumat</th>
                                         <th>Sabtu</th>
                                         <th>Minggu</th>
-                                        <th width="120">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -302,21 +320,25 @@ $result = $conn->query($sql);
                                             echo "<td><strong>" . htmlspecialchars($row['jam']) . "</strong></td>";
 
                                             foreach ($days as $day) {
-                                                echo "<td class='team-cell' data-id='" . $row['id'] . "' data-day='" . $day . "' data-value='" . htmlspecialchars($row[$day]) . "' data-jam='" . htmlspecialchars($row['jam']) . "'>";
-                                                echo htmlspecialchars($row[$day]);
+                                                $raw = trim($row[$day]);
+                                                // Treat empty, dash or 'Tersedia' as empty/default and display 'Tersedia'
+                                                if ($raw === '' || $raw === '-' || strcasecmp($raw, 'Tersedia') === 0) {
+                                                    $display = 'Tersedia';
+                                                    $dataValue = '';
+                                                } else {
+                                                    $display = $raw;
+                                                    $dataValue = $raw;
+                                                }
+
+                                                echo "<td class='team-cell' data-id='" . $row['id'] . "' data-day='" . $day . "' data-value='" . htmlspecialchars($dataValue) . "' data-jam='" . htmlspecialchars($row['jam']) . "'>";
+                                                echo htmlspecialchars($display);
                                                 echo "</td>";
                                             }
-
-                                            echo "<td>";
-                                            echo "<button class='btn btn-success btn-sm set-row-available' data-id='" . $row['id'] . "' title='Sediakan semua slot di baris ini'>";
-                                            echo "<i class='bi bi-check-circle'></i> Sediakan";
-                                            echo "</button>";
-                                            echo "</td>";
 
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='10' class='text-center'>Tidak ada data jadwal</td></tr>";
+                                        echo "<tr><td colspan='9' class='text-center'>Tidak ada data jadwal</td></tr>";
                                     }
                                     $conn->close();
                                     ?>
@@ -351,17 +373,21 @@ $result = $conn->query($sql);
                     <div class="mb-3">
                         <label for="teamNameInput" class="form-label">Nama Tim:</label>
                         <input type="text" class="form-control" id="teamNameInput" placeholder="Masukkan nama tim">
-                        <small class="form-text text-muted">Ketik 'Tersedia' jika slot kosong</small>
                     </div>
                     <div id="modalAlert" class="alert" role="alert" style="display: none;"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle"></i> Batal
-                    </button>
-                    <button type="button" class="btn btn-primary" id="saveTeamBtn">
-                        <i class="bi bi-save"></i> Simpan
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle"></i> Batal
+                        </button>
+                        <button type="button" class="btn btn-success" id="setAvailableBtn">
+                            <i class="bi bi-check-circle"></i> Sediakan
+                        </button>
+                        <button type="button" class="btn btn-primary" id="saveTeamBtn">
+                            <i class="bi bi-save"></i> Simpan
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -891,6 +917,55 @@ $result = $conn->query($sql);
                 });
         });
 
+        // Handler untuk tombol Sediakan di dalam modal
+        document.getElementById('setAvailableBtn').addEventListener('click', function() {
+            const jadwalId = document.getElementById('saveTeamBtn').dataset.id;
+            const day = document.getElementById('saveTeamBtn').dataset.day;
+            const dayName = day.charAt(0).toUpperCase() + day.slice(1);
+            const btn = this;
+
+            btn.disabled = true;
+            document.getElementById('saveTeamBtn').disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
+
+            fetch('admin-update-cell.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${jadwalId}&day=${day}&value=Tersedia`
+            })
+            .then(response => response.json())
+            .then(data => {
+                    if (data.success) {
+                    currentCell.textContent = 'Tersedia';
+                    // keep dataset empty so modal will show empty input for adding a team
+                    currentCell.dataset.value = '';
+                    document.getElementById('teamNameInput').value = '';
+
+                    showModalAlert('Slot berhasil disediakan!', 'success');
+                    showToast('Slot berhasil disediakan', 'success');
+
+                    setTimeout(() => {
+                        modal.hide();
+                        loadStatistics(); // Refresh stats
+                    }, 700);
+                } else {
+                    showModalAlert('Gagal menyediakan: ' + (data.message || 'Unknown error'), 'danger');
+                    showToast('Gagal menyediakan: ' + (data.message || ''), 'danger');
+                }
+            })
+            .catch(error => {
+                showModalAlert('Error: ' + error.message, 'danger');
+                showToast('Error: ' + error.message, 'danger');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                document.getElementById('saveTeamBtn').disabled = false;
+                btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan';
+            });
+        });
+
         function showModalAlert(message, type) {
             const alertDiv = document.getElementById('modalAlert');
             alertDiv.className = `alert alert-${type}`;
@@ -930,54 +1005,97 @@ $result = $conn->query($sql);
             }
         });
 
-        document.querySelectorAll('.set-row-available').forEach(button => {
-            button.addEventListener('click', function() {
-                const jadwalId = this.dataset.id;
-                const btn = this;
+        document.getElementById('setSlotsAvailable').addEventListener('click', function() {
+            const btn = this;
 
-                if (!confirm('Sediakan semua slot di baris ini dengan "Tersedia"?')) {
+            if (!confirm('Sediakan semua slot pada jadwal?')) {
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
+
+            fetch('admin-bulk-action.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=set_available'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('Semua slot berhasil disediakan!', 'success');
+
+                    // Update all cells in the table
+                    document.querySelectorAll('.team-cell').forEach(cell => {
+                        cell.textContent = 'Tersedia';
+                        // keep dataset.value empty so modal shows empty input for adding a team
+                        cell.dataset.value = '';
+                    });
+
+                    // Refresh statistics to reflect changes
+                    loadStatistics();
+                } else {
+                    showToast('Gagal: ' + (data.message || 'Unknown error'), 'danger');
+                }
+            })
+            .catch(error => {
+                showToast('Error: ' + error.message, 'danger');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan Semua Slot';
+            });
+        });
+
+        // Handler untuk tombol sediakan per hari
+        document.querySelectorAll('.set-day-available').forEach(button => {
+            button.addEventListener('click', function() {
+                const day = this.dataset.day;
+                const dayName = day.charAt(0).toUpperCase() + day.slice(1);
+                const dropdownButton = document.getElementById('setDayAvailableButton');
+
+                if (!confirm(`Sediakan semua slot untuk hari ${dayName}?`)) {
                     return;
                 }
 
-                btn.disabled = true;
-                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                // Disable both dropdown toggle and the clicked item
+                dropdownButton.disabled = true;
+                const originalDropdownText = dropdownButton.innerHTML;
+                dropdownButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
 
                 fetch('admin-bulk-action.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `action=set_row_available&id=${jadwalId}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast('Baris berhasil diisi dengan "Tersedia"!', 'success');
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `action=set_day_available&day=${day}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(`Semua slot untuk hari ${dayName} berhasil disediakan`, 'success');
 
-                            // Update the row in-place to avoid switching sections or a full reload
-                            const row = btn.closest('tr');
-                            if (row) {
-                                row.querySelectorAll('.team-cell').forEach(cell => {
-                                    cell.textContent = 'Tersedia';
-                                    cell.dataset.value = 'Tersedia';
-                                });
-                            }
+                        // Update semua cell untuk hari tersebut (display Tersedia, keep dataset empty)
+                        document.querySelectorAll(`.team-cell[data-day="${day}"]`).forEach(cell => {
+                            cell.textContent = 'Tersedia';
+                            cell.dataset.value = '';
+                        });
 
-                            // Refresh statistics to reflect changes
-                            loadStatistics();
-
-                        } else {
-                            showToast('Gagal: ' + (data.message || 'Unknown error'),
-                                'danger');
-                        }
-                    })
-                    .catch(error => {
-                        showToast('Error: ' + error.message, 'danger');
-                    })
-                    .finally(() => {
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan';
-                    });
+                        // Refresh statistics
+                        loadStatistics();
+                    } else {
+                        showToast('Gagal: ' + (data.message || 'Unknown error'), 'danger');
+                    }
+                })
+                .catch(error => {
+                    showToast('Error: ' + error.message, 'danger');
+                })
+                .finally(() => {
+                    dropdownButton.disabled = false;
+                    dropdownButton.innerHTML = originalDropdownText;
+                });
             });
         });
     });

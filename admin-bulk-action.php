@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 
 // Validasi action
-if (!in_array($action, ['set_available', 'clear_all', 'set_row_available'])) {
+if (!in_array($action, ['set_available', 'clear_all', 'set_row_available', 'set_day_available'])) {
     echo json_encode(['success' => false, 'message' => 'Action tidak valid']);
     exit();
 }
@@ -33,15 +33,15 @@ try {
     $conn = getConnection();
     
     if ($action === 'set_available') {
-        // Set semua kolom hari menjadi "Tersedia"
+        // Set semua kolom hari menjadi empty string (treat as available in UI)
         $sql = "UPDATE jadwal SET 
-                senin = 'Tersedia', 
-                selasa = 'Tersedia', 
-                rabu = 'Tersedia', 
-                kamis = 'Tersedia', 
-                jumat = 'Tersedia', 
-                sabtu = 'Tersedia', 
-                minggu = 'Tersedia'";
+                senin = '', 
+                selasa = '', 
+                rabu = '', 
+                kamis = '', 
+                jumat = '', 
+                sabtu = '', 
+                minggu = ''";
         
         if ($conn->query($sql)) {
             echo json_encode([
@@ -82,15 +82,15 @@ try {
             throw new Exception('ID jadwal tidak valid');
         }
         
-        $stmt = $conn->prepare("UPDATE jadwal SET 
-                senin = 'Tersedia', 
-                selasa = 'Tersedia', 
-                rabu = 'Tersedia', 
-                kamis = 'Tersedia', 
-                jumat = 'Tersedia', 
-                sabtu = 'Tersedia', 
-                minggu = 'Tersedia'
-                WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE jadwal SET 
+        senin = '', 
+        selasa = '', 
+        rabu = '', 
+        kamis = '', 
+        jumat = '', 
+        sabtu = '', 
+        minggu = ''
+        WHERE id = ?");
         
         $stmt->bind_param('i', $jadwalId);
         
@@ -105,6 +105,26 @@ try {
         }
         
         $stmt->close();
+    } else if ($action === 'set_day_available') {
+        // Set semua slot untuk hari tertentu menjadi "Tersedia"
+        $day = isset($_POST['day']) ? $_POST['day'] : '';
+        $validDays = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'];
+        
+        if (!in_array($day, $validDays)) {
+            throw new Exception('Hari tidak valid');
+        }
+        
+    $sql = "UPDATE jadwal SET " . $conn->real_escape_string($day) . " = ''";
+        
+        if ($conn->query($sql)) {
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Semua slot untuk hari ' . ucfirst($day) . ' berhasil disediakan',
+                'affected_rows' => $conn->affected_rows
+            ]);
+        } else {
+            throw new Exception('Gagal execute query: ' . $conn->error);
+        }
     }
     
     $conn->close();

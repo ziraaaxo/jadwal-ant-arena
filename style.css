@@ -155,6 +155,16 @@ body {
   );
 }
 
+.btn-success {
+  background: var(--success-color);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(5, 205, 153, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 767px) {
   .table thead {

@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Ant Arena Admin</title>
+    <title>Masuk - Ant Arena Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="logo">
                     <i class="bi bi-calendar3"></i>
                 </div>
-                <h2>Welcome Back</h2>
-                <p>Enter your credentials to access admin panel</p>
+                <h2>Selamat Datang</h2>
+                <p>Masukkan kredensial Anda untuk mengakses panel admin</p>
             </div>
 
             <?php if ($error): ?>
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <i class="bi bi-person"></i>
                         </span>
                         <input type="text" class="form-control" id="username" name="username"
-                            placeholder="Enter your username" required autofocus>
+                            placeholder="Masukkan username" required autofocus>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -96,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <i class="bi bi-lock"></i>
                         </span>
                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Enter your password" required>
+                            placeholder="Masukkan password" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-login">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Masuk
                 </button>
             </form>
 
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mt-3 text-center">
                 <a href="index.php"
                     style="color: var(--primary-gradient-start); text-decoration: none; font-weight: 600;">
-                    <i class="bi bi-arrow-left me-1"></i>Back to Schedule
+                    <i class="bi bi-arrow-left me-1"></i>Kembali ke Beranda
                 </a>
             </div>
         </div>

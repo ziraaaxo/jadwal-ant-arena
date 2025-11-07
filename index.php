@@ -31,8 +31,7 @@ $result = $conn->query($sql);
                         <i class="bi bi-calendar-week" style="color: var(--primary-gradient-start);"></i>
                         Jadwal Operasional
                     </h2>
-                    <p class="mb-0" style="color: var(--text-secondary); font-size: 0.95rem;">Schedule & Booking
-                        Information</p>
+                    <p class="mb-0" style="color: var(--text-secondary); font-size: 0.95rem;">Informasi Jadwal dan Reservasi</p>
                 </div>
                 <a href="admin-login.php" class="btn btn-primary" style="text-decoration: none;">
                     <i class="bi bi-lock"></i> Admin

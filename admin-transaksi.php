@@ -160,15 +160,15 @@ function getNextSortOrder($column) {
         <nav class="nav flex-column">
             <a class="nav-link" href="admin-dashboard.php">
                 <i class="bi bi-house-door"></i>
-                <span>Dashboard</span>
+                <span>Beranda</span>
             </a>
             <a class="nav-link" href="admin-dashboard.php#edit-jadwal">
                 <i class="bi bi-calendar-week"></i>
-                <span>Edit Jadwal</span>
+                <span>Penjadwalan</span>
             </a>
             <a class="nav-link active" href="admin-transaksi.php">
                 <i class="bi bi-cash-coin"></i>
-                <span>Transaksi Keuangan</span>
+                <span>Transaksi</span>
             </a>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
@@ -177,7 +177,7 @@ function getNextSortOrder($column) {
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>Keluar</span>
             </a>
         </nav>
     </div>
@@ -220,7 +220,7 @@ function getNextSortOrder($column) {
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Pages / Transaksi
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / Transaksi
                     </div>
                     <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola
                         Transaksi</h1>
@@ -399,7 +399,7 @@ function getNextSortOrder($column) {
                                 <!-- Previous Button -->
                                 <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
                                     <a class="page-link"
-                                        href="<?php echo buildUrl(['page' => $page - 1]); ?>">Previous</a>
+                                        href="<?php echo buildUrl(['page' => $page - 1]); ?>">Sebelumnya</a>
                                 </li>
 
                                 <?php
@@ -431,7 +431,7 @@ function getNextSortOrder($column) {
 
                                 <!-- Next Button -->
                                 <li class="page-item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo buildUrl(['page' => $page + 1]); ?>">Next</a>
+                                    <a class="page-link" href="<?php echo buildUrl(['page' => $page + 1]); ?>">Selanjutnya</a>
                                 </li>
                             </ul>
                         </nav>
@@ -521,7 +521,7 @@ function getNextSortOrder($column) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
                     </div>
                 </form>
             </div>
