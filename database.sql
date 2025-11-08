@@ -1,19 +1,3 @@
--- Tabel untuk fasilitas
-CREATE TABLE IF NOT EXISTS `fasilitas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) NOT NULL,
-  `deskripsi` text NOT NULL,
-  `foto` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Data sample fasilitas
-INSERT INTO `fasilitas` (`nama`, `deskripsi`) VALUES
-('Lapangan Utama', 'Lapangan bulutangkis utama dengan lantai vinyl dan pencahayaan LED'),
-('Ruang Ganti', 'Ruang ganti bersih dan nyaman untuk pemain'),
-('Kantin', 'Kantin menyediakan makanan dan minuman ringan'),
-('Parkir Luas', 'Area parkir kendaraan yang luas dan aman');
 -- Database untuk Jadwal Ant Arena
 -- Jalankan script ini di phpMyAdmin atau MySQL client
 
@@ -90,3 +74,20 @@ CREATE TABLE IF NOT EXISTS `testimoni` (
 INSERT INTO `testimoni` (`nama`, `testimoni`, `foto`, `tanggal`) VALUES
 ('John Doe', 'Lapangan sangat bagus dan pelayanannya ramah!', 'default1.jpg', '2025-11-01'),
 ('Jane Smith', 'Fasilitas lengkap dan nyaman untuk berlatih.', 'default2.jpg', '2025-11-02');
+
+-- Tabel untuk fasilitas
+CREATE TABLE IF NOT EXISTS `fasilitas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Data sample fasilitas
+INSERT INTO `fasilitas` (`nama`, `deskripsi`, `foto`) VALUES
+('Lapangan Utama', 'Lapangan bulutangkis utama dengan lantai vinyl dan pencahayaan LED', 'default1.jpg'),
+('Ruang Ganti', 'Ruang ganti bersih dan nyaman untuk pemain', 'default2.jpg'),
+('Kantin', 'Kantin menyediakan makanan dan minuman ringan', 'default3.jpg'),
+('Parkir Luas', 'Area parkir kendaraan yang luas dan aman', 'default4.jpg');
