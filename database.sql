@@ -91,3 +91,26 @@ INSERT INTO `fasilitas` (`nama`, `deskripsi`, `foto`) VALUES
 ('Ruang Ganti', 'Ruang ganti bersih dan nyaman untuk pemain', 'default2.jpg'),
 ('Kantin', 'Kantin menyediakan makanan dan minuman ringan', 'default3.jpg'),
 ('Parkir Luas', 'Area parkir kendaraan yang luas dan aman', 'default4.jpg');
+
+-- Tabel untuk reservasi
+CREATE TABLE IF NOT EXISTS `reservasi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_tim` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `no_telepon` varchar(20) NOT NULL,
+  `hari` enum('senin','selasa','rabu','kamis','jumat','sabtu','minggu') NOT NULL,
+  `jam` varchar(50) NOT NULL,
+  `status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  `pesan` text,
+  `tanggal_mulai` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_tanggal` (`tanggal_mulai`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Data sample untuk reservasi
+INSERT INTO `reservasi` (`nama_tim`, `email`, `no_telepon`, `hari`, `jam`, `status`, `pesan`, `tanggal_mulai`) VALUES
+('Tim Garuda', 'tim.garuda@email.com', '081234567890', 'senin', '08.00 - 11.00', 'pending', 'Mohon slot untuk tim regular', '2025-11-10'),
+('Meteor Club', 'meteor.club@email.com', '082345678901', 'rabu', '17.00 - 20.00', 'pending', 'Reservasi untuk tim baru', '2025-11-12');

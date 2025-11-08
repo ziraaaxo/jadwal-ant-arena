@@ -117,6 +117,10 @@ usort($images, function($a, $b) { return filemtime($b) <=> filemtime($a); });
                 <i class="bi bi-calendar-week"></i>
                 <span>Penjadwalan</span>
             </a>
+            <a class="nav-link" href="admin-reservasi.php">
+                <i class="bi bi-calendar-check"></i>
+                <span>Reservasi</span>
+            </a>
             <a class="nav-link active" href="admin-galeri.php">
                 <i class="bi bi-images"></i>
                 <span>Galeri</span>
