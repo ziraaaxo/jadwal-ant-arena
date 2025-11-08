@@ -1,8 +1,8 @@
 -- Database untuk Jadwal Ant Arena
 -- Jalankan script ini di phpMyAdmin atau MySQL client
 
-CREATE DATABASE IF NOT EXISTS ant-arena;
-USE ant-arena;
+CREATE DATABASE IF NOT EXISTS `ant-arena`;
+USE `ant-arena`;
 
 -- Tabel untuk menyimpan jadwal tim
 CREATE TABLE IF NOT EXISTS jadwal (
