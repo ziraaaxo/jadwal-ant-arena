@@ -221,8 +221,8 @@ $result = $conn->query($sql);
 
         applyClasses();
 
-        // Auto-play (5s) and controls
-        let delay = 5000;
+        // Auto-play (10s) and controls
+        let delay = 10000;
         let timer = setInterval(nextSlide, delay);
         function resetTimer() {
             clearInterval(timer);
@@ -308,8 +308,8 @@ $result = $conn->query($sql);
 
             applyClasses();
 
-            // Auto-play (5s) and controls
-            let delay = 5000;
+            // Auto-play (10s) and controls
+            let delay = 10000;
             let timer = setInterval(nextSlide, delay);
             function resetTimer() {
                 clearInterval(timer);
