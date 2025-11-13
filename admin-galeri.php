@@ -140,7 +140,7 @@ usort($images, function($a, $b) { return filemtime($b) <=> filemtime($a); });
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>

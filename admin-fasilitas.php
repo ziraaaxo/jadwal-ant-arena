@@ -10,6 +10,7 @@ $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +22,7 @@ $result = $conn->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -60,7 +62,7 @@ $result = $conn->query($sql);
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
@@ -77,15 +79,18 @@ $result = $conn->query($sql);
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / Fasilitas</div>
-                    <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola Fasilitas</h1>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman /
+                        Fasilitas</div>
+                    <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola
+                        Fasilitas</h1>
                 </div>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <div class="d-flex align-items-center gap-2"
                     style="background: white; padding: 10px 16px; border-radius: 12px; box-shadow: 0 4px 12px rgba(112, 144, 176, 0.08);">
                     <i class="bi bi-person-circle" style="font-size: 1.5rem; color: var(--primary-gradient-start);"></i>
-                    <span style="font-weight: 600; color: var(--text-primary);"><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+                    <span
+                        style="font-weight: 600; color: var(--text-primary);"><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
                 </div>
             </div>
         </div>
@@ -175,7 +180,8 @@ $result = $conn->query($sql);
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto Fasilitas</label>
                             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
-                            <small class="form-text text-muted">Format yang diperbolehkan: JPG, JPEG, PNG, GIF. Maks: 5MB</small>
+                            <small class="form-text text-muted">Format yang diperbolehkan: JPG, JPEG, PNG, GIF. Maks:
+                                5MB</small>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -204,12 +210,14 @@ $result = $conn->query($sql);
                         </div>
                         <div class="mb-3">
                             <label for="edit_deskripsi" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="2" required></textarea>
+                            <textarea class="form-control" id="edit_deskripsi" name="deskripsi" rows="2"
+                                required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="edit_foto" class="form-label">Foto Fasilitas</label>
                             <input type="file" class="form-control" id="edit_foto" name="foto" accept="image/*">
-                            <small class="form-text text-muted">Format yang diperbolehkan: JPG, JPEG, PNG, GIF. Maks: 5MB. Kosongkan jika tidak ingin mengubah foto.</small>
+                            <small class="form-text text-muted">Format yang diperbolehkan: JPG, JPEG, PNG, GIF. Maks:
+                                5MB. Kosongkan jika tidak ingin mengubah foto.</small>
                             <div id="current_photo" class="mt-2"></div>
                         </div>
                     </div>
@@ -254,16 +262,18 @@ $result = $conn->query($sql);
     document.getElementById('sidebarToggle')?.addEventListener('click', function() {
         document.getElementById('sidebar').classList.toggle('show');
     });
+
     function editFasilitas(data) {
         document.getElementById('edit_id').value = data.id;
         document.getElementById('edit_nama').value = data.nama;
         document.getElementById('edit_deskripsi').value = data.deskripsi;
-        document.getElementById('current_photo').innerHTML = data.foto ? 
-            `<img src="assets/fasilitas/${data.foto}" alt="Foto Saat Ini" style="max-width: 200px; max-height: 200px; object-fit: contain;">` : 
+        document.getElementById('current_photo').innerHTML = data.foto ?
+            `<img src="assets/fasilitas/${data.foto}" alt="Foto Saat Ini" style="max-width: 200px; max-height: 200px; object-fit: contain;">` :
             'Tidak ada foto';
         const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
         modal.show();
     }
+
     function hapusFasilitas(id) {
         document.getElementById('delete_id').value = id;
         const modal = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
@@ -271,4 +281,5 @@ $result = $conn->query($sql);
     }
     </script>
 </body>
+
 </html>

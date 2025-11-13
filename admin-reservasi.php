@@ -14,6 +14,7 @@ $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,52 @@ $result = $conn->query($sql);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+    /* Extend status block to visually match two action buttons width */
+    td.action-cell {
+        width: 260px;
+    }
+
+    .status-wide {
+        display: block;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-align: center;
+        letter-spacing: 0.25px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .status-wide.status-approved {
+        background: linear-gradient(90deg, #05c985, #08e29a);
+        color: #fff;
+    }
+
+    .status-wide.status-rejected {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .status-wide.status-pending {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    /* Improve button alignment consistency */
+    td.action-cell .btn {
+        min-width: 108px;
+    }
+
+    @media (max-width: 992px) {
+        td.action-cell {
+            min-width: 180px;
+        }
+    }
+    </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -64,7 +110,7 @@ $result = $conn->query($sql);
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
@@ -81,15 +127,18 @@ $result = $conn->query($sql);
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / Reservasi</div>
-                    <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola Reservasi</h1>
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman /
+                        Reservasi</div>
+                    <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola
+                        Reservasi</h1>
                 </div>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <div class="d-flex align-items-center gap-2"
                     style="background: white; padding: 10px 16px; border-radius: 12px; box-shadow: 0 4px 12px rgba(112, 144, 176, 0.08);">
                     <i class="bi bi-person-circle" style="font-size: 1.5rem; color: var(--primary-gradient-start);"></i>
-                    <span style="font-weight: 600; color: var(--text-primary);"><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
+                    <span
+                        style="font-weight: 600; color: var(--text-primary);"><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
                 </div>
             </div>
         </div>
@@ -116,11 +165,16 @@ $result = $conn->query($sql);
                         <div class="card-body">
                             <form method="get" class="d-flex gap-3 align-items-center">
                                 <label for="status" class="form-label mb-0">Filter Status:</label>
-                                <select name="status" id="status" class="form-select" style="width: 200px;" onchange="this.form.submit()">
-                                    <option value="all" <?php echo $status_filter == 'all' ? 'selected' : ''; ?>>Semua Status</option>
-                                    <option value="pending" <?php echo $status_filter == 'pending' ? 'selected' : ''; ?>>Pending</option>
-                                    <option value="approved" <?php echo $status_filter == 'approved' ? 'selected' : ''; ?>>Disetujui</option>
-                                    <option value="rejected" <?php echo $status_filter == 'rejected' ? 'selected' : ''; ?>>Ditolak</option>
+                                <select name="status" id="status" class="form-select" style="width: 200px;"
+                                    onchange="this.form.submit()">
+                                    <option value="all" <?php echo $status_filter == 'all' ? 'selected' : ''; ?>>Semua
+                                        Status</option>
+                                    <option value="pending"
+                                        <?php echo $status_filter == 'pending' ? 'selected' : ''; ?>>Pending</option>
+                                    <option value="approved"
+                                        <?php echo $status_filter == 'approved' ? 'selected' : ''; ?>>Disetujui</option>
+                                    <option value="rejected"
+                                        <?php echo $status_filter == 'rejected' ? 'selected' : ''; ?>>Ditolak</option>
                                 </select>
                             </form>
                         </div>
@@ -150,19 +204,19 @@ $result = $conn->query($sql);
                             <tbody>
                                 <?php if ($result && $result->num_rows > 0):
                                     while ($row = $result->fetch_assoc()): ?>
-                                    <tr>
-                                        <td><?php echo $row['id']; ?></td>
-                                        <td><?php echo htmlspecialchars($row['nama_tim']); ?></td>
-                                        <td>
-                                            <div>Email: <?php echo htmlspecialchars($row['email']); ?></div>
-                                            <div>Telp: <?php echo htmlspecialchars($row['no_telepon']); ?></div>
-                                        </td>
-                                        <td>
-                                            <div>Hari: <?php echo ucfirst(htmlspecialchars($row['hari'])); ?></div>
-                                            <div>Jam: <?php echo htmlspecialchars($row['jam']); ?></div>
-                                        </td>
-                                        <td>
-                                            <?php 
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo htmlspecialchars($row['nama_tim']); ?></td>
+                                    <td>
+                                        <div>Email: <?php echo htmlspecialchars($row['email']); ?></div>
+                                        <div>Telp: <?php echo htmlspecialchars($row['no_telepon']); ?></div>
+                                    </td>
+                                    <td>
+                                        <div>Hari: <?php echo ucfirst(htmlspecialchars($row['hari'])); ?></div>
+                                        <div>Jam: <?php echo htmlspecialchars($row['jam']); ?></div>
+                                    </td>
+                                    <td>
+                                        <?php 
                                             $badge_class = [
                                                 'pending' => 'bg-warning',
                                                 'approved' => 'bg-success',
@@ -174,32 +228,38 @@ $result = $conn->query($sql);
                                                 'rejected' => 'Ditolak'
                                             ];
                                             ?>
-                                            <span class="badge <?php echo $badge_class[$row['status']]; ?>">
-                                                <?php echo $status_text[$row['status']]; ?>
-                                            </span>
-                                        </td>
-                                        <td><?php echo date('d/m/Y', strtotime($row['tanggal_mulai'])); ?></td>
-                                        <td><?php echo htmlspecialchars($row['pesan']); ?></td>
-                                        <td>
-                                            <?php if ($row['status'] == 'pending'): ?>
-                                            <button class="btn btn-sm btn-success mb-1" onclick="approveReservation(<?php echo $row['id']; ?>)">
-                                                <i class="bi bi-check-circle"></i> Setujui
-                                            </button>
-                                            <button class="btn btn-sm btn-danger mb-1" onclick="rejectReservation(<?php echo $row['id']; ?>)">
-                                                <i class="bi bi-x-circle"></i> Tolak
-                                            </button>
-                                            <?php else: ?>
-                                            <button class="btn btn-sm btn-secondary" disabled>
-                                                <?php echo $status_text[$row['status']]; ?>
-                                            </button>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <?php endwhile;
+                                        <span class="badge <?php echo $badge_class[$row['status']]; ?>">
+                                            <?php echo $status_text[$row['status']]; ?>
+                                        </span>
+                                    </td>
+                                    <td><?php echo date('d/m/Y', strtotime($row['tanggal_mulai'])); ?></td>
+                                    <td><?php echo htmlspecialchars($row['pesan']); ?></td>
+                                    <td class="action-cell">
+                                        <?php if ($row['status'] == 'pending'): ?>
+                                        <button class="btn btn-sm btn-success mb-1"
+                                            onclick="approveReservation(<?php echo $row['id']; ?>)">
+                                            <i class="bi bi-check-circle"></i> Setujui
+                                        </button>
+                                        <button class="btn btn-sm btn-danger mb-1"
+                                            onclick="rejectReservation(<?php echo $row['id']; ?>)">
+                                            <i class="bi bi-x-circle"></i> Tolak
+                                        </button>
+                                        <?php else: ?>
+                                        <?php if ($row['status'] == 'approved'): ?>
+                                        <div class="status-wide status-approved">Disetujui</div>
+                                        <?php elseif ($row['status'] == 'rejected'): ?>
+                                        <div class="status-wide status-rejected">Ditolak</div>
+                                        <?php else: ?>
+                                        <div class="status-wide status-pending">Menunggu</div>
+                                        <?php endif; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <?php endwhile;
                                 else: ?>
-                                    <tr>
-                                        <td colspan="8" class="text-center">Tidak ada data reservasi</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="8" class="text-center">Tidak ada data reservasi</td>
+                                </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -226,7 +286,8 @@ $result = $conn->query($sql);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn" id="confirmButton" onclick="document.getElementById('reservationForm').submit();">Konfirmasi</button>
+                    <button type="button" class="btn" id="confirmButton"
+                        onclick="document.getElementById('reservationForm').submit();">Konfirmasi</button>
                 </div>
             </div>
         </div>
@@ -234,39 +295,40 @@ $result = $conn->query($sql);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('show');
-        });
+    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('show');
+    });
 
-        function showConfirmationModal(id, action, title, message, buttonClass) {
-            const modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalMessage').textContent = message;
-            document.getElementById('reservationId').value = id;
-            document.getElementById('reservationAction').value = action;
-            document.getElementById('confirmButton').className = 'btn ' + buttonClass;
-            modal.show();
-        }
+    function showConfirmationModal(id, action, title, message, buttonClass) {
+        const modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalMessage').textContent = message;
+        document.getElementById('reservationId').value = id;
+        document.getElementById('reservationAction').value = action;
+        document.getElementById('confirmButton').className = 'btn ' + buttonClass;
+        modal.show();
+    }
 
-        function approveReservation(id) {
-            showConfirmationModal(
-                id,
-                'approve',
-                'Konfirmasi Persetujuan',
-                'Apakah Anda yakin ingin menyetujui reservasi ini?',
-                'btn-success'
-            );
-        }
+    function approveReservation(id) {
+        showConfirmationModal(
+            id,
+            'approve',
+            'Konfirmasi Persetujuan',
+            'Apakah Anda yakin ingin menyetujui reservasi ini?',
+            'btn-success'
+        );
+    }
 
-        function rejectReservation(id) {
-            showConfirmationModal(
-                id,
-                'reject',
-                'Konfirmasi Penolakan',
-                'Apakah Anda yakin ingin menolak reservasi ini?',
-                'btn-danger'
-            );
-        }
+    function rejectReservation(id) {
+        showConfirmationModal(
+            id,
+            'reject',
+            'Konfirmasi Penolakan',
+            'Apakah Anda yakin ingin menolak reservasi ini?',
+            'btn-danger'
+        );
+    }
     </script>
 </body>
+
 </html>

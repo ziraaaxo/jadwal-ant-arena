@@ -62,7 +62,7 @@ $result = $conn->query($sql);
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
@@ -288,7 +288,7 @@ $result = $conn->query($sql);
 
             <!-- Section: Edit Jadwal -->
             <div class="section-content" id="section-edit-jadwal">
-                
+
                 <h4 class="mb-4" style="color: var(--text-primary); font-weight: 700;">📅 Manajemen Jadwal</h4>
 
                 <div class="mb-3 d-flex gap-2 justify-content-end">
@@ -296,7 +296,8 @@ $result = $conn->query($sql);
                         <i class="bi bi-check-circle"></i> Sediakan Semua Slot
                     </button>
                     <div class="dropdown">
-                        <button class="btn btn-success dropdown-toggle" type="button" id="setDayAvailableButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="setDayAvailableButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-check-circle"></i> Sediakan Per Hari
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="setDayAvailableButton">
@@ -909,7 +910,8 @@ $result = $conn->query($sql);
                 .then(data => {
                     if (data.success) {
                         // Escape HTML entities for displaying team name
-                        currentCell.textContent = newValue; // Use textContent for security when showing team name
+                        currentCell.textContent =
+                        newValue; // Use textContent for security when showing team name
                         currentCell.dataset.value = newValue;
 
                         showModalAlert('Berhasil diupdate!', 'success');
@@ -947,41 +949,42 @@ $result = $conn->query($sql);
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
 
             fetch('admin-update-cell.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `id=${jadwalId}&day=${day}&value=Tersedia`
-            })
-            .then(response => response.json())
-            .then(data => {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${jadwalId}&day=${day}&value=Tersedia`
+                })
+                .then(response => response.json())
+                .then(data => {
                     if (data.success) {
-                    currentCell.innerHTML = '<span class="text-success">Tersedia</span>';
-                    // keep dataset empty so modal will show empty input for adding a team
-                    currentCell.dataset.value = '';
-                    document.getElementById('teamNameInput').value = '';
+                        currentCell.innerHTML = '<span class="text-success">Tersedia</span>';
+                        // keep dataset empty so modal will show empty input for adding a team
+                        currentCell.dataset.value = '';
+                        document.getElementById('teamNameInput').value = '';
 
-                    showModalAlert('Slot berhasil disediakan!', 'success');
-                    showToast('Slot berhasil disediakan', 'success');
+                        showModalAlert('Slot berhasil disediakan!', 'success');
+                        showToast('Slot berhasil disediakan', 'success');
 
-                    setTimeout(() => {
-                        modal.hide();
-                        loadStatistics(); // Refresh stats
-                    }, 700);
-                } else {
-                    showModalAlert('Gagal menyediakan: ' + (data.message || 'Unknown error'), 'danger');
-                    showToast('Gagal menyediakan: ' + (data.message || ''), 'danger');
-                }
-            })
-            .catch(error => {
-                showModalAlert('Error: ' + error.message, 'danger');
-                showToast('Error: ' + error.message, 'danger');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                document.getElementById('saveTeamBtn').disabled = false;
-                btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan';
-            });
+                        setTimeout(() => {
+                            modal.hide();
+                            loadStatistics(); // Refresh stats
+                        }, 700);
+                    } else {
+                        showModalAlert('Gagal menyediakan: ' + (data.message || 'Unknown error'),
+                            'danger');
+                        showToast('Gagal menyediakan: ' + (data.message || ''), 'danger');
+                    }
+                })
+                .catch(error => {
+                    showModalAlert('Error: ' + error.message, 'danger');
+                    showToast('Error: ' + error.message, 'danger');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    document.getElementById('saveTeamBtn').disabled = false;
+                    btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan';
+                });
         });
 
         function showModalAlert(message, type) {
@@ -1034,37 +1037,37 @@ $result = $conn->query($sql);
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
 
             fetch('admin-bulk-action.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'action=set_available'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showToast('Semua slot berhasil disediakan!', 'success');
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=set_available'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('Semua slot berhasil disediakan!', 'success');
 
-                    // Update all cells in the table
-                    document.querySelectorAll('.team-cell').forEach(cell => {
-                        cell.innerHTML = '<span class="text-success">Tersedia</span>';
-                        // keep dataset.value empty so modal shows empty input for adding a team
-                        cell.dataset.value = '';
-                    });
+                        // Update all cells in the table
+                        document.querySelectorAll('.team-cell').forEach(cell => {
+                            cell.innerHTML = '<span class="text-success">Tersedia</span>';
+                            // keep dataset.value empty so modal shows empty input for adding a team
+                            cell.dataset.value = '';
+                        });
 
-                    // Refresh statistics to reflect changes
-                    loadStatistics();
-                } else {
-                    showToast('Gagal: ' + (data.message || 'Unknown error'), 'danger');
-                }
-            })
-            .catch(error => {
-                showToast('Error: ' + error.message, 'danger');
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan Semua Slot';
-            });
+                        // Refresh statistics to reflect changes
+                        loadStatistics();
+                    } else {
+                        showToast('Gagal: ' + (data.message || 'Unknown error'), 'danger');
+                    }
+                })
+                .catch(error => {
+                    showToast('Error: ' + error.message, 'danger');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-check-circle"></i> Sediakan Semua Slot';
+                });
         });
 
         // Handler untuk tombol sediakan per hari
@@ -1081,39 +1084,45 @@ $result = $conn->query($sql);
                 // Disable both dropdown toggle and the clicked item
                 dropdownButton.disabled = true;
                 const originalDropdownText = dropdownButton.innerHTML;
-                dropdownButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
+                dropdownButton.innerHTML =
+                    '<span class="spinner-border spinner-border-sm me-2"></span>Menyediakan...';
 
                 fetch('admin-bulk-action.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `action=set_day_available&day=${day}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast(`Semua slot untuk hari ${dayName} berhasil disediakan`, 'success');
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=set_day_available&day=${day}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(
+                                `Semua slot untuk hari ${dayName} berhasil disediakan`,
+                                'success');
 
-                        // Update semua cell untuk hari tersebut (display Tersedia, keep dataset empty)
-                        document.querySelectorAll(`.team-cell[data-day="${day}"]`).forEach(cell => {
-                            cell.innerHTML = '<span class="text-success">Tersedia</span>';
-                            cell.dataset.value = '';
-                        });
+                            // Update semua cell untuk hari tersebut (display Tersedia, keep dataset empty)
+                            document.querySelectorAll(`.team-cell[data-day="${day}"]`)
+                                .forEach(cell => {
+                                    cell.innerHTML =
+                                        '<span class="text-success">Tersedia</span>';
+                                    cell.dataset.value = '';
+                                });
 
-                        // Refresh statistics
-                        loadStatistics();
-                    } else {
-                        showToast('Gagal: ' + (data.message || 'Unknown error'), 'danger');
-                    }
-                })
-                .catch(error => {
-                    showToast('Error: ' + error.message, 'danger');
-                })
-                .finally(() => {
-                    dropdownButton.disabled = false;
-                    dropdownButton.innerHTML = originalDropdownText;
-                });
+                            // Refresh statistics
+                            loadStatistics();
+                        } else {
+                            showToast('Gagal: ' + (data.message || 'Unknown error'),
+                                'danger');
+                        }
+                    })
+                    .catch(error => {
+                        showToast('Error: ' + error.message, 'danger');
+                    })
+                    .finally(() => {
+                        dropdownButton.disabled = false;
+                        dropdownButton.innerHTML = originalDropdownText;
+                    });
             });
         });
     });

@@ -63,7 +63,7 @@ $result = $conn->query($sql);
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
@@ -81,7 +81,8 @@ $result = $conn->query($sql);
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / Testimoni
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman /
+                        Testimoni
                     </div>
                     <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola
                         Testimoni</h1>
@@ -222,10 +223,12 @@ $result = $conn->query($sql);
                         </div>
                         <div class="mb-3">
                             <label for="edit_testimoni" class="form-label">Testimoni</label>
-                            <textarea class="form-control" id="edit_testimoni" name="testimoni" rows="3" required></textarea>
+                            <textarea class="form-control" id="edit_testimoni" name="testimoni" rows="3"
+                                required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="edit_foto" class="form-label">Foto (Biarkan kosong jika tidak ingin mengubah)</label>
+                            <label for="edit_foto" class="form-label">Foto (Biarkan kosong jika tidak ingin
+                                mengubah)</label>
                             <input type="file" class="form-control" id="edit_foto" name="foto" accept="image/*">
                         </div>
                         <div class="mb-3">

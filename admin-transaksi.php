@@ -189,7 +189,7 @@ function getNextSortOrder($column) {
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 30px;">
             <a class="nav-link" href="index.php" target="_blank">
                 <i class="bi bi-eye"></i>
-                <span>Lihat Jadwal Publik</span>
+                <span>Halaman Publik</span>
             </a>
             <a class="nav-link" href="admin-logout.php">
                 <i class="bi bi-box-arrow-right"></i>
@@ -199,11 +199,13 @@ function getNextSortOrder($column) {
     </div>
 
     <!-- Modal Konfirmasi Hapus -->
-    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-labelledby="modalConfirmDeleteLabel" aria-hidden="true">
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-labelledby="modalConfirmDeleteLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="border-bottom: none;">
-                    <h5 class="modal-title" id="modalConfirmDeleteLabel" style="font-weight: 700; color: var(--text-primary);">
+                    <h5 class="modal-title" id="modalConfirmDeleteLabel"
+                        style="font-weight: 700; color: var(--text-primary);">
                         <i class="bi bi-trash3 text-danger me-2"></i>Konfirmasi Hapus
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -236,7 +238,8 @@ function getNextSortOrder($column) {
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div>
-                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman / Transaksi
+                    <div style="color: var(--text-secondary); font-size: 0.875rem; font-weight: 500;">Halaman /
+                        Transaksi
                     </div>
                     <h1 class="m-0" style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">Kelola
                         Transaksi</h1>
@@ -447,7 +450,8 @@ function getNextSortOrder($column) {
 
                                 <!-- Next Button -->
                                 <li class="page-item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">
-                                    <a class="page-link" href="<?php echo buildUrl(['page' => $page + 1]); ?>">Selanjutnya</a>
+                                    <a class="page-link"
+                                        href="<?php echo buildUrl(['page' => $page + 1]); ?>">Selanjutnya</a>
                                 </li>
                             </ul>
                         </nav>
