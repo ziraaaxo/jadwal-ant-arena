@@ -199,6 +199,7 @@ $result = $conn->query($sql);
                                     <th>Nama Tim</th>
                                     <th>Kontak</th>
                                     <th>Jadwal</th>
+                                    <th>Paket</th>
                                     <th>Status</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Pesan</th>
@@ -219,6 +220,7 @@ $result = $conn->query($sql);
                                         <div>Hari: <?php echo ucfirst(htmlspecialchars($row['hari'])); ?></div>
                                         <div>Jam: <?php echo htmlspecialchars($row['jam']); ?></div>
                                     </td>
+                                    <td><?php echo htmlspecialchars($row['paket'] ?? ''); ?></td>
                                     <td>
                                         <?php 
                                             $badge_class = [

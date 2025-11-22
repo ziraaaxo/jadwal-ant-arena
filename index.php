@@ -36,6 +36,16 @@ if ($res) {
     $res->free_result();
 }
 
+// Ambil gambar hero (slider background)
+$heroImages = glob(__DIR__ . '/assets/hero/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP,GIF}', GLOB_BRACE) ?: [];
+// Urutkan terbaru dulu
+usort($heroImages, function($a,$b){ return filemtime($b) <=> filemtime($a); });
+// Siapkan rel path
+$heroRel = [];
+foreach ($heroImages as $h) { $heroRel[] = 'assets/hero/' . basename($h); }
+// Fallback jika kosong
+if (empty($heroRel)) { $heroRel[] = 'assets/hero/home.jpeg'; }
+
 // Ambil gambar galeri dari folder yang dikelola admin
 $galeriImages = glob(__DIR__ . '/assets/galeri/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP,GIF}', GLOB_BRACE) ?: [];
 // Urutkan terbaru di atas
@@ -95,7 +105,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                     <li><a href="#tentang">Tentang</a></li>
                     <li><a href="#fasilitas">Fasilitas</a></li>
                     <li><a href="#galeri">Galeri</a></li>
-                    <li><a href="#harga">Harga</a></li>
+                    <li><a href="#harga">Paket</a></li>
                     <li><a href="#jadwal">Jadwal</a></li>
                     <li><a href="#testimoni">Testimoni</a></li>
                     <li><a href="#faq">FAQ</a></li>
@@ -112,12 +122,23 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
     <main class="main">
 
         <!-- Beranda Section -->
-        <section id="beranda" class="hero section light-background"
-            style="background-image: url('assets/img/home.jpeg'); min-height:100vh; background-size:cover; background-position:center;">
+        <section id="beranda" class="hero section light-background">
+            <!-- Hero Slider Background Layer -->
+            <div class="hero-slider" data-auto="6000">
+                <?php foreach ($heroRel as $i => $bg): ?>
+                <div class="hero-slide<?= $i===0 ? ' active' : '' ?>" style="background-image:url('<?= e($bg) ?>');"
+                    aria-hidden="<?= $i===0 ? 'false':'true' ?>"></div>
+                <?php endforeach; ?>
+                <?php if (count($heroRel) > 1): ?>
+                <button class="hero-nav hero-prev" type="button" aria-label="Sebelumnya">&#10094;</button>
+                <button class="hero-nav hero-next" type="button" aria-label="Berikutnya">&#10095;</button>
+                <?php endif; ?>
+            </div>
             <div class="container">
                 <div class="row gy-4 justify-content-center align-items-center" style="min-height: calc(100vh - 80px);">
                     <div class="col-lg-8 d-flex flex-column justify-content-center text-center">
-                        <h1 data-aos="fade-up">Raih Kemenangan di Setiap Pukulan!</h1>
+                        <h1 style="font-size: 8rem;" class="hero-title" data-aos="fade-up">Raih Kemenangan di Setiap
+                            Pukulan!</h1>
                         <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
                             <a href="#reservasi" class="btn-get-started">Reservasi Sekarang</a>
                         </div>
@@ -157,6 +178,13 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                     pemesanan jadwal yang mudah, kami siap menjadi tempat terbaik bagi Anda
                                     untuk berlatih, bersaing, dan menikmati permainan bulutangkis setiap hari.
                                 </p>
+                                <p class="fst-italic">
+                                    Sebagai arena yang terus berkembang, @nt's Arena juga berkomitmen untuk memberikan
+                                    pengalaman terbaik bagi setiap pengunjung melalui pelayanan ramah dan sistem
+                                    pengelolaan yang profesional. Kami selalu terbuka untuk berbagai kegiatan seperti
+                                    latihan rutin, sparring, hingga turnamen internal yang dapat meningkatkan kemampuan
+                                    sekaligus mempererat hubungan antar pemain.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -173,18 +201,18 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
                     <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="why-box">
-                            <h3>Kenapa Pilih @nt's Arena</h3>
+                            <h3>Kenapa @nt's Arena?</h3>
                             <p>
-                                @nt's Arena adalah pilihan terbaik untuk Anda yang ingin menyewa lapangan badminton di
+                                @nt's Arena adalah pilihan terbaik untuk Anda yang ingin menyewa lapangan di
                                 Samarinda.
-                                Kami menyediakan lapangan berkualitas tinggi dengan lantai berstandar turnamen,
+                                Kami menyediakan lapangan berkualitas dengan lantai berstandar turnamen,
                                 pencahayaan optimal,
                                 serta suasana nyaman untuk latihan maupun pertandingan.
                             </p>
                             <p>
                                 Dengan sistem pemesanan yang mudah dan harga sewa yang terjangkau,
                                 Anda dapat bermain kapan saja tanpa khawatir kehabisan jadwal.
-                                Kami juga menyediakan area istirahat dan fasilitas lengkap untuk mendukung pengalaman
+                                Kami juga menyediakan fasilitas lengkap untuk mendukung pengalaman
                                 bermain Anda.
                             </p>
                         </div>
@@ -241,6 +269,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
                     <div class="col-lg-3 col-md-6">
                         <div class="stats-item text-center w-100 h-100">
+                            <i class="bi bi-people stats-icon"></i>
                             <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
                                 class="purecounter"></span>
                             <p>Klien</p>
@@ -249,6 +278,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
                     <div class="col-lg-3 col-md-6">
                         <div class="stats-item text-center w-100 h-100">
+                            <i class="bi bi-stopwatch stats-icon"></i>
                             <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1"
                                 class="purecounter"></span>
                             <p>Total Jam Reservasi</p>
@@ -257,9 +287,19 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
                     <div class="col-lg-3 col-md-6">
                         <div class="stats-item text-center w-100 h-100">
+                            <i class="bi bi-person-badge stats-icon"></i>
                             <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1"
                                 class="purecounter"></span>
                             <p>Pegawai</p>
+                        </div>
+                    </div><!-- End Stats Item -->
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stats-item text-center w-100 h-100">
+                            <i class="bi bi-columns stats-icon"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="1"
+                                class="purecounter"></span>
+                            <p>Lapangan</p>
                         </div>
                     </div><!-- End Stats Item -->
 
@@ -278,9 +318,9 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                 <p><span>Cek</span> <span class="description-title">Fasilitas</span> <span>Kami</span></p>
             </div><!-- End Section Title -->
 
-            <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <div class="swiper init-swiper">
+                <div class="swiper init-swiper fasilitas-swiper">
                     <script type="application/json" class="swiper-config">
                     {
                         "loop": true,
@@ -300,7 +340,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                 "spaceBetween": 40
                             },
                             "1200": {
-                                "slidesPerView": 3,
+                                "slidesPerView": 2,
                                 "spaceBetween": 1
                             }
                         }
@@ -371,7 +411,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                 "spaceBetween": 30
                             },
                             "1200": {
-                                "slidesPerView": 3,
+                                "slidesPerView": 2.5,
                                 "spaceBetween": 30
                             }
                         }
@@ -407,15 +447,15 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Harga</h2>
+                <h2>Paket</h2>
                 <p><span>Cek</span> <span class="description-title">Paket Harga</span> <span>Kami</span></p>
             </div><!-- End Section Title -->
 
             <div class="container">
-                <div class="row gy-4 justify-content-center">
+                <div class="row gy-4">
 
                     <!-- FREE/BASIC PLAN -->
-                    <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="pricing-card pricing-free">
                             <div class="pricing-header">
                                 <h3 class="pricing-title">SEWA PER JAM</h3>
@@ -429,10 +469,10 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                 <h4>Yang Termasuk:</h4>
                                 <ul>
                                     <li><i class="bi bi-check-circle-fill"></i> Akses Lapangan</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Pencahayaan LED</li>
                                     <li><i class="bi bi-check-circle-fill"></i> Minimal Sewa 3 Jam</li>
                                     <li class="disabled"><i class="bi bi-x-circle"></i> Diskon Member</li>
                                     <li class="disabled"><i class="bi bi-x-circle"></i> Prioritas Booking</li>
+                                    <li class="disabled"><i class="bi bi-x-circle"></i> Bonus Event Internal</li>
                                 </ul>
                             </div>
                             <div class="pricing-action">
@@ -442,7 +482,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                     </div>
 
                     <!-- ENTERPRISE/PREMIUM PLAN -->
-                    <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="pricing-card pricing-enterprise">
                             <div class="pricing-header">
                                 <h3 class="pricing-title">SEWA BULANAN</h3>
@@ -456,14 +496,43 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                 <h4>Yang Termasuk:</h4>
                                 <ul>
                                     <li><i class="bi bi-check-circle-fill"></i> Akses Lapangan</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Pencahayaan LED</li>
+
                                     <li><i class="bi bi-check-circle-fill"></i> 4x Main (3 jam/sesi)</li>
                                     <li><i class="bi bi-check-circle-fill"></i> Diskon Member 15%</li>
                                     <li><i class="bi bi-check-circle-fill"></i> Prioritas Booking</li>
+                                    <li class="disabled"><i class="bi bi-x-circle"></i> Bonus Event Internal</li>
                                 </ul>
                             </div>
                             <div class="pricing-action">
                                 <a href="#reservasi" class="btn-pricing btn-pricing-enterprise">Pilih Paket</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ANNUAL PLAN -->
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="pricing-card pricing-annual">
+                            <div class="pricing-header">
+                                <h3 class="pricing-title">SEWA TAHUNAN</h3>
+                                <p class="pricing-subtitle">Pilihan maksimal untuk klub aktif</p>
+                            </div>
+                            <div class="pricing-price">
+                                <h2>Rp 3.600.000</h2>
+                                <span class="pricing-period">/Per Tahun</span>
+                            </div>
+                            <div class="pricing-features">
+                                <h4>Yang Termasuk:</h4>
+                                <ul>
+                                    <li><i class="bi bi-check-circle-fill"></i> Akses Lapangan</li>
+
+                                    <li><i class="bi bi-check-circle-fill"></i> 60x Main (3 jam/sesi)</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Diskon Member 25%</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Prioritas Booking</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Bonus Event Internal</li>
+                                </ul>
+                            </div>
+                            <div class="pricing-action">
+                                <a href="#reservasi" class="btn-pricing btn-pricing-annual">Pilih Paket</a>
                             </div>
                         </div>
                     </div>
@@ -517,10 +586,6 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                             <?php endif; ?>
                         </tbody>
                     </table>
-                </div>
-
-                <div class="jadwal-info" data-aos="fade-up" data-aos-delay="200">
-                    <p><i class="bi bi-info-circle"></i> Data diperbarui secara real-time oleh admin</p>
                 </div>
             </div>
 
@@ -578,7 +643,9 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                         </div>
                                     </div>
                                     <div class="col-lg-2 text-center">
-                                        <img src="<?= e($img) ?>" class="img-fluid testimonial-img" alt="Testimoni">
+                                        <div class="testimonial-img-wrapper">
+                                            <img src="<?= e($img) ?>" class="testimonial-img" alt="Testimoni">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -624,28 +691,30 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
                 <div class="faq-container">
                     <?php if (!empty($faqRows)): ?>
-                        <?php foreach ($faqRows as $f): ?>
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <h3><?= e($f['pertanyaan']) ?></h3>
-                                    <button class="faq-toggle" type="button">
-                                        <i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>
-                                <div class="faq-answer">
-                                    <p><?= nl2br(e($f['jawaban'])) ?></p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <!-- Fallback FAQ jika belum ada data -->
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <h3>Bagaimana cara reservasi?</h3>
-                                <button class="faq-toggle" type="button"><i class="bi bi-plus-lg"></i></button>
-                            </div>
-                            <div class="faq-answer"><p>Isi form reservasi atau hubungi WA kami. Konfirmasi 1x24 jam.</p></div>
+                    <?php foreach ($faqRows as $f): ?>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3><?= e($f['pertanyaan']) ?></h3>
+                            <button class="faq-toggle" type="button">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
                         </div>
+                        <div class="faq-answer">
+                            <p><?= nl2br(e($f['jawaban'])) ?></p>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <!-- Fallback FAQ jika belum ada data -->
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bagaimana cara reservasi?</h3>
+                            <button class="faq-toggle" type="button"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Isi form reservasi atau hubungi WA kami. Konfirmasi 1x24 jam.</p>
+                        </div>
+                    </div>
                     <?php endif; ?>
                 </div>
 
@@ -701,6 +770,14 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                                                 <option value="14:00-17:00">14:00-17:00</option>
                                                 <option value="17:00-20:00">17:00-20:00</option>
                                                 <option value="20:00-23:00">20:00-23:00</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <select class="form-select" name="paket" id="paket" required>
+                                                <option value="" disabled selected>Pilih Paket</option>
+                                                <option value="jam">Harian</option>
+                                                <option value="bulanan">Bulanan</option>
+                                                <option value="tahunan">Tahunan</option>
                                             </select>
                                         </div>
                                     </div>
@@ -926,7 +1003,7 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span>2025</span> <strong class="px-1 sitename">@nt's Arena</strong> <span>All Rights Reserved</span>
+            <p>© <span>2025</span> <strong class="px-1 sitename">@nt's Arena</strong> <span>Semua Hak Dilindungi</span>
             </p>
             <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
@@ -956,6 +1033,79 @@ function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+    <!-- Hero Slider Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.hero-slider');
+        if (!slider) return;
+        const slides = Array.from(slider.querySelectorAll('.hero-slide'));
+        if (slides.length === 0) return;
+        let index = 0;
+        const prevBtn = slider.querySelector('.hero-prev');
+        const nextBtn = slider.querySelector('.hero-next');
+        const intervalMs = parseInt(slider.getAttribute('data-auto'), 10) || 6000;
+        let timerId;
+
+        function show(idx) {
+            slides[index].classList.remove('active');
+            slides[index].setAttribute('aria-hidden', 'true');
+            index = (idx + slides.length) % slides.length;
+            slides[index].classList.add('active');
+            slides[index].setAttribute('aria-hidden', 'false');
+        }
+
+        function next() {
+            show(index + 1);
+        }
+
+        function prev() {
+            show(index - 1);
+        }
+
+        function startTimer() {
+            clearTimer();
+            timerId = setInterval(next, intervalMs);
+        }
+
+        function clearTimer() {
+            if (timerId) clearInterval(timerId);
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            next();
+            startTimer();
+        });
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            prev();
+            startTimer();
+        });
+
+        // Pause on hover for desktop
+        slider.addEventListener('mouseenter', clearTimer);
+        slider.addEventListener('mouseleave', startTimer);
+
+        // Touch swipe support (simple)
+        let touchStartX = null;
+        slider.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+            clearTimer();
+        });
+        slider.addEventListener('touchend', e => {
+            if (touchStartX === null) {
+                startTimer();
+                return;
+            }
+            const diff = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(diff) > 40) {
+                diff < 0 ? next() : prev();
+            }
+            touchStartX = null;
+            startTimer();
+        });
+
+        if (slides.length > 1) startTimer();
+    });
+    </script>
 
 </body>
 

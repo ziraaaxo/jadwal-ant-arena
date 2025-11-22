@@ -19,12 +19,21 @@ try {
     $nohp   = trim($_POST['nohp'] ?? '');
     $tanggal= trim($_POST['tanggal'] ?? ''); // format yyyy-mm-dd dari input type=date
     $waktu  = trim($_POST['waktu'] ?? '');   // format HH:MM dari input type=time
+    $paket  = trim($_POST['paket'] ?? '');   // paket: jam | bulanan | tahunan
     $pesan  = trim($_POST['pesan'] ?? '');
 
     // Validasi sederhana
-    if ($nama === '' || $email === '' || $nohp === '' || $tanggal === '' || $waktu === '') {
+    if ($nama === '' || $email === '' || $nohp === '' || $tanggal === '' || $waktu === '' || $paket === '') {
         http_response_code(400);
         echo 'Semua field wajib diisi';
+        exit;
+    }
+
+    // Validasi paket
+    $allowedPaket = ['jam','bulanan','tahunan'];
+    if (!in_array($paket, $allowedPaket, true)) {
+        http_response_code(400);
+        echo 'Paket tidak valid';
         exit;
     }
 
@@ -99,7 +108,7 @@ try {
     }
 
     // Lanjut simpan reservasi
-    $sql = 'INSERT INTO reservasi (nama_tim, email, no_telepon, hari, jam, status, pesan, tanggal_mulai) VALUES (?,?,?,?,?, ?, ?, ?)';
+    $sql = 'INSERT INTO reservasi (nama_tim, email, no_telepon, hari, jam, paket, status, pesan, tanggal_mulai) VALUES (?,?,?,?,?, ?, ?, ?, ?)';
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         throw new Exception('Gagal prepare statement');
@@ -108,12 +117,13 @@ try {
     // Status harus variabel (bind_param by reference)
     $status = 'pending';
     $stmt->bind_param(
-        'ssssssss',
+        'sssssssss',
         $nama,
         $email,
         $nohp,
         $hari,
         $jamStr,
+        $paket,
         $status,
         $pesan,
         $tanggal
